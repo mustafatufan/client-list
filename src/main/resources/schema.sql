@@ -10,7 +10,7 @@ create table user (
 
 create table country (
 	country_id		identity,
-	country_name	varchar(100),
+	country_name	varchar(100)	not null,
 	unique key uk_country_name (country_name)
 );
 
@@ -19,7 +19,7 @@ create table client (
 	username		varchar(100)	not null,
 	first_name		varchar(100)	not null,
 	last_name		varchar(100)	not null,
-	email			varchar(255)	not null,
+	email			varchar(255)	null,
 	address			varchar(1000)	not null,
 	country_id		bigint			not null,
 	foreign key (username) references user(username),

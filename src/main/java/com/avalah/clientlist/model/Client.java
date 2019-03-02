@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -33,6 +34,7 @@ public class Client implements Serializable {
 	@Size(max = 100)
 	private String lastName;
 
+	@Email
 	@Column(name = "email")
 	@Size(max = 255)
 	private String email;
