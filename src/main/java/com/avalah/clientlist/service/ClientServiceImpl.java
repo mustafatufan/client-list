@@ -21,6 +21,15 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	public Client getClient(String username, User user) {
+		Client client = clientRepository.getOne(username);
+		if (client.getUser().equals(user)) {
+			return client;
+		}
+		return null;
+	}
+
+	@Override
 	public List<Client> getClientList(User user) {
 		return clientRepository.findByUser(user);
 	}

@@ -9,6 +9,6 @@ import com.avalah.clientlist.model.Client;
 import com.avalah.clientlist.model.User;
 
 @Repository("clientRepository")
-public interface ClientRepository extends JpaRepository<Client, Long> {
+public interface ClientRepository extends JpaRepository<Client, String> {
 	public List<Client> findByUser(User user);
 }

@@ -9,6 +9,8 @@ public interface ClientService {
 
 	public Client saveClient(Client client);
 
+	public Client getClient(String username, User user);
+
 	public List<Client> getClientList(User user);
 
 }
