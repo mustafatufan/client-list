@@ -17,15 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/", "/home")
-				.permitAll()
-				.and()
-				.authorizeRequests()
 				.antMatchers("/h2-console", "/h2-console/**")
 				.permitAll()
 				.anyRequest().authenticated()
