@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.avalah.clientlist.model.Client;
 import com.avalah.clientlist.model.User;
-import com.avalah.clientlist.repository.CountryRepository;
 import com.avalah.clientlist.repository.UserRepository;
+import com.avalah.clientlist.service.CacheService;
 import com.avalah.clientlist.service.ClientService;
 
 @Controller
 public class ClientController {
 
 	private ClientService clientService;
+	private CacheService cacheService;
 	private UserRepository userRepository;
-	private CountryRepository countryRepository;
 
 	@GetMapping(value = "/")
 	public String index(Model model) {
@@ -35,14 +35,14 @@ public class ClientController {
 	@GetMapping(value = "/client/{clientUsername}")
 	public String editClient(@PathVariable("clientUsername") String clientUsername,
 			Model model) {
-		model.addAttribute("countryList", countryRepository.findAll());
+		model.addAttribute("countryList", cacheService.getCountryList());
 		model.addAttribute("client", clientService.getClient(clientUsername, getCurrentUser()));
 		return "client";
 	}
 
 	@GetMapping(value = "/newClient")
 	public String newClient(Model model) {
-		model.addAttribute("countryList", countryRepository.findAll());
+		model.addAttribute("countryList", cacheService.getCountryList());
 		model.addAttribute("client", new Client());
 		return "client";
 	}
@@ -71,9 +71,9 @@ public class ClientController {
 	}
 
 	@Autowired
-	@Qualifier("countryRepository")
-	public void setCountryRepository(CountryRepository countryRepository) {
-		this.countryRepository = countryRepository;
+	@Qualifier("cacheService")
+	public void setCacheService(CacheService cacheService) {
+		this.cacheService = cacheService;
 	}
 
 	@Autowired
