@@ -13,16 +13,19 @@ import com.avalah.clientlist.repository.ClientRepository;
 @Service("clientService")
 public class ClientServiceImpl implements ClientService {
 
+	private UserService userService;
 	private ClientRepository clientRepository;
 
 	@Override
 	public Client saveClient(Client client) {
+		client.setUser(userService.getCurrentUser());
 		return clientRepository.save(client);
 	}
 
 	@Override
-	public Client getClient(String username, User user) {
+	public Client getClient(String username) {
 		Client client = clientRepository.getOne(username);
+		User user = userService.getCurrentUser();
 		if (client.getUser().equals(user)) {
 			return client;
 		}
@@ -30,7 +33,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<Client> getClientList(User user) {
+	public List<Client> getClientList() {
+		User user = userService.getCurrentUser();
 		return clientRepository.findByUser(user);
 	}
 
@@ -40,4 +44,9 @@ public class ClientServiceImpl implements ClientService {
 		this.clientRepository = clientRepository;
 	}
 
+	@Autowired
+	@Qualifier("userService")
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }

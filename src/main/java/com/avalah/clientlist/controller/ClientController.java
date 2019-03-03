@@ -4,8 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,21 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.avalah.clientlist.model.Client;
-import com.avalah.clientlist.model.User;
-import com.avalah.clientlist.repository.UserRepository;
-import com.avalah.clientlist.service.CountryService;
 import com.avalah.clientlist.service.ClientService;
+import com.avalah.clientlist.service.CountryService;
 
 @Controller
 public class ClientController {
 
 	private ClientService clientService;
 	private CountryService countryService;
-	private UserRepository userRepository;
 
 	@GetMapping(value = "/")
 	public String index(Model model) {
-		model.addAttribute("clientList", clientService.getClientList(getCurrentUser()));
+		model.addAttribute("clientList", clientService.getClientList());
 		return "index";
 	}
 
@@ -36,7 +31,7 @@ public class ClientController {
 	public String editClient(@PathVariable("clientUsername") String clientUsername,
 			Model model) {
 		model.addAttribute("countryList", countryService.getCountryList());
-		model.addAttribute("client", clientService.getClient(clientUsername, getCurrentUser()));
+		model.addAttribute("client", clientService.getClient(clientUsername));
 		return "client";
 	}
 
@@ -52,16 +47,9 @@ public class ClientController {
 		if (result.hasErrors()) {
 			return "client";
 		}
-		client.setUser(getCurrentUser());
 		clientService.saveClient(client);
-		model.addAttribute("clientList", clientService.getClientList(getCurrentUser()));
+		model.addAttribute("clientList", clientService.getClientList());
 		return "index";
-	}
-
-	// TODO: Refactor this approach.
-	public User getCurrentUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return userRepository.getOne(authentication.getName());
 	}
 
 	@Autowired
@@ -76,9 +64,4 @@ public class ClientController {
 		this.countryService = countryService;
 	}
 
-	@Autowired
-	@Qualifier("userRepository")
-	public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 }
