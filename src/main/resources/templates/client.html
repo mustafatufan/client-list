@@ -17,11 +17,11 @@
 						<div class="col">
 							<h1 class="h3 mb-3 font-weight-normal" th:if="${client.username == null}">New Client</h1>
 							<h1 class="h3 mb-3 font-weight-normal" th:if="${client.username != null}">Edit Client</h1>
-							<input class="form-control m-1" type="text" th:field="*{firstName}" id="firstName" placeholder="First Name" required>
-							<input class="form-control m-1" type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name" required>
-							<input class="form-control m-1" type="text" th:field="*{username}" id="username" placeholder="Username" th:readonly="${client.username != null}" required>
-							<input class="form-control m-1" type="email" th:field="*{email}" id="email" placeholder="Email (Optional)">
-							<input class="form-control m-1" type="text" th:field="*{address}" id="address" placeholder="1234 Main St" required>
+							<input class="form-control m-1" type="text" th:field="*{firstName}" id="firstName" placeholder="First Name" required th:maxlength="100">
+							<input class="form-control m-1" type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name" required th:maxlength="100">
+							<input class="form-control m-1" type="text" th:field="*{username}" id="username" placeholder="Username" th:readonly="${client.username != null}" required th:maxlength="100">
+							<input class="form-control m-1" type="email" th:field="*{email}" id="email" placeholder="Email (Optional)" th:maxlength="255">
+							<input class="form-control m-1" type="text" th:field="*{address}" id="address" placeholder="1234 Main St" required th:maxlength="1000">
 							<select th:field="*{country}" class="custom-select m-1" id="country" required>
 								<option value="">Choose Country</option>
 								<option th:each="country : ${countryList}" th:value="${country.id}" th:text="${country.name}"></option>
