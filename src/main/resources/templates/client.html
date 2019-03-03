@@ -22,12 +22,10 @@
 							<input class="form-control m-1" type="text" th:field="*{username}" id="username" placeholder="Username" th:readonly="${client.username != null}" required>
 							<input class="form-control m-1" type="email" th:field="*{email}" id="email" placeholder="Email (Optional)">
 							<input class="form-control m-1" type="text" th:field="*{address}" id="address" placeholder="1234 Main St" required>
-							<div class="mb-3">
-								<select th:field="*{country}" class="custom-select d-block w-100" id="country" required>
-									<option value="">Choose Country</option>
-									<option th:each="country : ${countryList}" th:value="${country.id}" th:text="${country.name}"></option>
-								</select>
-							</div>
+							<select th:field="*{country}" class="custom-select m-1" id="country" required>
+								<option value="">Choose Country</option>
+								<option th:each="country : ${countryList}" th:value="${country.id}" th:text="${country.name}"></option>
+							</select>
 						</div>
 					</div>
 					<hr class="mb-4" />
