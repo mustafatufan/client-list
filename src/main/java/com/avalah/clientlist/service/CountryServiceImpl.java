@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.avalah.clientlist.model.Country;
 import com.avalah.clientlist.repository.CountryRepository;
 
-@Service("cacheService")
-public class CacheServiceImpl implements CacheService {
+@Service("countryService")
+public class CountryServiceImpl implements CountryService {
 
 	private CountryRepository countryRepository;
 

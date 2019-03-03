@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.avalah.clientlist.model.Country;
 
-public interface CacheService {
+public interface CountryService {
 	public List<Country> getCountryList();
 }
